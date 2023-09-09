@@ -1,0 +1,202 @@
+Question 1:								
+Write a small explanation of all commands in Data Control Language (DCL) and Transaction Control Language (TCL), along with some examples.		
+						                           DCL
+DCL includes commands such as GRANT and REVOKE which mainly deal with the rights, permissions, and other controls of the database system. 
+GRANT: This command gives users access privileges to the database.
+EXAMPLE:
+GRANT ALL ON Users TO 'Name'@'localhost;
+REVOKE: This command withdraws the user’s access privileges given by using the GRANT command.
+EXAMPLE:
+REVOKE ALL ON Users TO 'Name'@'localhost;
+                                                   TCL
+Each transaction begins with a specific task and ends when all the tasks in the group successfully complete. If any of the tasks fail, the transaction fails. Therefore, a transaction has only two end success and failure.                 
+COMMIT: Commits a Transaction
+Example
+
+	DELETE from Student where Student_Id = 12345;
+	COMMIT;
+
+ROLLBACK: Rollbacks a transaction in case of any error occurs
+
+Example
+
+	DELETE from Student where Student_Id = 12345;
+	ROLLBACK;
+
+
+SAVEPOINT: Sets a save point within a transaction.
+
+		SELECT * FROM EMP;
+		UPDATE EMP SET AGE = AGE + 1;
+
+		SAVEPOINT samplesavepoint;
+
+		INSERT INTO EMP ('Mac', 'Mohan', 26, 'M', 2000);
+
+		ROLLBACK TO SAVEPOINT samplesavepoint;
+		COMMIT;ie
+
+
+Question 2:				
+create an table "customer" with following columns				
+	cust_id        -- small int			
+	cust_no        --  medium int	
+	cust_firstname -- char			
+	cust_lastname  -- varchar			
+	cust_gender    -- varchar			
+	cust_dob       -- DATE			
+	cust_age       -- int			
+	cust_revenue   -- decimal			
+	cust_spend_amt -- float			
+	cust_address   -- TEXT			
+	cust_city      -- CHAR			
+	cust_comments    -- TEXT			
+	cust_status     --  ENUM (active, Inactive)
+	cust_available  -- BOOLEAN	
+Note : column size as per your wish and enter 5 records into the table				
+
+
+create table customer (cust_id smallint,cust_no mediumint,cust_firstname varchar(50),cust_lastname varchar(50),cust_gender varchar(30),cust_dob date,cust_age  int,cust_revenue  decimal(5,2),
+cust_spend_amt  float	,	cust_address TEXT, 	cust_city CHAR	(30),	cust_comments TEXT,	cust_status varchar(50),	cust_available  BOOLEAN	 );	
+
+ 
+insert into customer(cust_id ,cust_no ,cust_firstname ,cust_lastname ,cust_gender ,cust_dob ,cust_age  ,cust_revenue  ,
+cust_spend_amt  ,	cust_address , 	cust_city ,	cust_comments ,	cust_status ,	cust_available )
+values (1,123,'alan','mark','male','1998-10-09',25,534.46,234.45,' Bazaar Lane Mylapore
+Chennai - 600 004','chennai', 'good','active',true),(2,124,'mark','antony','male','1997-07-15',26,834.44,345.12,'Sivanandapuram Sathy Rd Coimbatore-641035','coimbatore','better','active',true),(3,125,'aliya','khan','female','1995-10-19',27,422.78,123.67, 'Kamani Kurla West Kurla  Mumbai-400070','mumbai',
+'excellent','active',true),(4,127,'shreya','pal','female','1999-5-22',24,678.12,345.35, 'EVR Street Nesapakkam chennai-600007','chennai','bad','Inactive',	False),(5,129,'rajini','kanth','male','1990-3-02',33,
+557.25,445.67 ,'Beck Bagan Row Park Circus Ballygunge Kolkata West Bengal -700017' ,'west bengal','very good','active' ,true);
+ 
+			
+Question 3:			
+The output of the SELECT statement should be a single column			
+1) convert a value of the cust_id column to string.			
+2) convert a value of the cust_dob column to date.			
+3) convert a value of the cust_revenue column to int			
+4) 4) convert a value of the cust_available column to text			
+
+1) select cast(cust_id as char ) from customer;
+2) select cast(cust_dob as date) from customer;
+3) select cast(cust_revenue as int) from customer;
+4) Select cast(cust_available as text) from customer;
+
+			
+Return "Child" if the customer's age is less than 18,			
+Adult Customer  if the customer's age is between 21 and 65,			
+and "Senior Customer" if the customer's age is greater than 65.			
+
+select cust_id,cust_firstname,cust_lastname,cust_no,cust_age,
+ CASE
+ when cust_age <18 then "child"
+ when cust_age between 21 AND 65 then "Adult Customer"
+ when cust_age >65 then "senior customer"
+ else "age"
+ end as "agegroup" 
+ from customer;
+
+			
+Question 5:			
+Alter the above table by adding the following constraints			
+	cust_id -- not null	
+	alter table customer
+modify 	cust_id char not null;
+
+	cust_no -- unique	
+	
+	alter table customer
+modify cust_no mediumint unique;
+
+	
+	cust_city -- default with a value NY	
+	ALTER TABLE customer ALTER cust_city SET DEFAULT 'NY' ;
+	
+
+						
+Question 6:						
+Create a table called 'Employees' with the following columns:						
+	EmployeeID as an integer primary key					
+	Name as a non-null varchar(50)					
+	Age as an integer with a check constraint that ensures the age is greater than or equal to 18					
+	Department as a varchar(50) with a default value of 'IT'.					
+Insert some value and if its failed to insert, will provide the some comment on why it was failing						
+
+	
+	create table Employees ( Employee_ID integer primary key ,Employee_name varchar(50) non-null, employee_age integer constraint check_employees check (employee_age>=18)  ,employee_dep varchar(50)default 'IT
+	Insert into Employees(Employee_ID  ,Employee_name , employee_age )values (1,'rohit',20);
+	 insert into Employees(Employee_ID  ,Employee_name , employee_age ) values (2,'yash' ,34);
+	 insert into Employees(Employee_ID  ,Employee_name , employee_age ) values (3 ,'rubak',18);
+	 
+	Question 7:			
+Create an table "customers_data" with below columns			
+	customer_id   -- INT  -- PRIMARY KEY		
+	customer_name -- VARCHAR(255) -- NOT NULL,	
+	
+create table customer_data (customer_id integer primary key,customer_name varchar(255) notnull);			
+			
+Create an table "orders" with below columns			
+	order_id  -- INT -- PRIMARY KEY ,		
+	customer_id  -- INT -- NOT NULL ,		
+	order_date   -- DATE		 
+	
+	CREATE Table orders (order_id int primary key,customer_id int not null ,order_date date);
+
+Question 8:					
+Enter some random 5 records of data into customers_data and orders table.					
+insert into customer_data values ( 1,"joseph");
+ insert into customer_data  values (2,"khan");
+insert into customer_data  values (3,"mani");
+ insert into customer_data  values (4,"raj");
+insert into customer_data  values (5,"michel");
+
+
+ insert into orders values (123,23,'2004-10-11');
+  insert into orders values (124,24,'2004-10-12');
+  insert into orders values (125,25,'2004-10-13');
+  insert into orders values (126,26,'2004-10-14');
+  insert into orders values (127,27,'2004-10-15');		
+  
+Question 9:			
+Remove any of 2 records from the customers_data and orders table.			 
+Explain how to remove the data from the two tables in a steps	
+
+delete * from customer_data, orders where order_id='123' and customer_id = '1';
+
+
+Question 10:	
+	
+Difference between unique and primary key
+
+PARAMETERS                 Primary key                                                   Unique key
+                                                                                     
+                                                                                     
+                                                                                       Uniquely determines a row that isn’t the primary key.
+Basic                      Used to serve as a unique identifier for                                     
+                           each row in a table.                                                                      
+                           
+
+NULL value acceptance      Cannot accept NULL values.                                   Can accept NULL values
+
+
+Index                      Creates clustered index                                      Creates non-clustered index
+
+
+Number of keys that        Only one primary key                                          More than one unique key
+can be 
+defined in the table
+
+
+Uses                       The primary Key is used for indicating                        The Unique Key is used for preventing duplicate entries.
+                           the rows uniquely.
+
+		
+
+
+
+
+
+
+
+
+
+
+	
